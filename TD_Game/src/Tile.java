@@ -1,41 +1,33 @@
-class Tile {
+class Tile extends GameObject{
     private TileType type;
-    private Image sprite;
-    private boolean isOccupied;
     
-    public Tile(TileType type, Image sprite) {
+    public Tile(int x, int y, TileType type) {
+        super(x, y);
         this.type = type;
-        this.sprite = sprite;
-        this.isOccupied = false;
     }
-    
-    public TileType getType() {
-        return type;
+    @Override
+    public void update() {
+        // Tiles don't usually need updating
     }
-    
-    public boolean isOccupied() {
-        return isOccupied;
-    }
-    
-    public void setOccupied(boolean occupied) {
-        isOccupied = occupied;
-    }
-    
-    public void render() {
-        // Render the tile sprite
-        // This is a placeholder for actual rendering code
-        char display = ' ';
+    @Override
+    public void render(java.awt.Graphics g) {
+        // Render tile based on type
         switch (type) {
             case PATH:
-                display = '#';
+                g.setColor(java.awt.Color.BLACK);
                 break;
-            case BUILDABLE:
-                display = isOccupied ? 'T' : '.';
+            case GRASS:
+                g.setColor(java.awt.Color.GREEN);
                 break;
-            case BLOCKED:
-                display = 'X';
+            case WATER:
+                g.setColor(java.awt.Color.BLUE);
                 break;
         }
-        System.out.print(display);
+        g.fillRect(x * 32, y * 32, 32, 32);
+        g.setColor(java.awt.Color.BLACK);
+        g.drawRect(x * 32, y * 32, 32, 32);
     }
+    public TileType getType() { return type; }
+    public void setType(TileType type) { this.type = type; }
 }
+

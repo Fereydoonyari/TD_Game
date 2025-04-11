@@ -1,60 +1,109 @@
-abstract class Enemy extends Entity {
+abstract class Enemy extends GameObject {
     protected int health;
     protected int maxHealth;
-    protected float speed;
-    protected int damage;
+    protected double speed;
     protected int reward;
-    protected List<Point> path;
-    protected int currentPathIndex;
+    protected int damage; // Damage to player if enemy reaches the end
+    protected Path path;
+    protected int currentWaypointIndex;
+    protected double progressToNextWaypoint;
     
-    public Enemy(List<Point> path, Image sprite, int health, float speed, int damage, int reward) {
-        super(path.get(0).x, path.get(0).y, sprite);
-        this.path = path;
+    public Enemy(int health, double speed, int reward, int damage) {
+        super(0, 0); // Position will be set when spawned on path
         this.health = health;
         this.maxHealth = health;
         this.speed = speed;
-        this.damage = damage;
         this.reward = reward;
-        this.currentPathIndex = 0;
+        this.damage = damage;
+        this.currentWaypointIndex = 0;
+        this.progressToNextWaypoint = 0;
     }
     
-    @Override
-    public void update(float deltaTime) {
-        // Move along the path
-        if (currentPathIndex < path.size() - 1) {
-            Point target = path.get(currentPathIndex + 1);
-            float dx = target.x - x;
-            float dy = target.y - y;
-            float distance = (float) Math.sqrt(dx * dx + dy * dy);
-            
-            if (distance > 0.1f) {
-                float moveX = dx / distance * speed * deltaTime;
-                float moveY = dy / distance * speed * deltaTime;
-                x += moveX;
-                y += moveY;
-            } else {
-                currentPathIndex++;
-            }
+    public void setPath(Path path) {
+        this.path = path;
+        if (path != null && !path.getWaypoints().isEmpty()) {
+            java.awt.Point start = path.getWaypoints().get(0);
+            this.x = start.x;
+            this.y = start.y;
         }
     }
     
-    public void takeDamage(int amount) {
-        health -= amount;
+    @Override
+    public void update() {
+        if (!isActive || path == null) return;
+        
+        java.util.List<java.awt.Point> waypoints = path.getWaypoints();
+        
+        if (currentWaypointIndex >= waypoints.size() - 1) {
+            // Enemy reached the end of the path
+            reachedEnd();
+            return;
+        }
+        
+        // Get current and next waypoints
+        java.awt.Point current = waypoints.get(currentWaypointIndex);
+        java.awt.Point next = waypoints.get(currentWaypointIndex + 1);
+        
+        // Calculate direction
+        double dx = next.x - current.x;
+        double dy = next.y - current.y;
+        double distance = Math.sqrt(dx * dx + dy * dy);
+        
+        // Update progress
+        progressToNextWaypoint += speed / distance;
+        
+        if (progressToNextWaypoint >= 1.0) {
+            // Move to next waypoint
+            currentWaypointIndex++;
+            progressToNextWaypoint = 0;
+        } else {
+            // Interpolate position
+            x = (int) (current.x + dx * progressToNextWaypoint);
+            y = (int) (current.y + dy * progressToNextWaypoint);
+        }
     }
     
-    public boolean isDead() {
-        return health <= 0;
+    @Override
+    public void render(java.awt.Graphics g) {
+        // Render enemy
+        renderEnemy(g);
+        
+        // Render health bar
+        renderHealthBar(g);
     }
     
-    public boolean hasReachedEnd() {
-        return currentPathIndex >= path.size() - 1;
+    protected abstract void renderEnemy(java.awt.Graphics g);
+    
+    protected void renderHealthBar(java.awt.Graphics g) {
+        int barWidth = 30;
+        int barHeight = 4;
+        int healthWidth = (int) ((double) health / maxHealth * barWidth);
+        
+        g.setColor(java.awt.Color.RED);
+        g.fillRect(x - barWidth / 2, y - 20, barWidth, barHeight);
+        g.setColor(java.awt.Color.GREEN);
+        g.fillRect(x - barWidth / 2, y - 20, healthWidth, barHeight);
     }
     
-    public int getDamage() {
-        return damage;
+    public void takeDamage(int damage) {
+        health -= damage;
+        if (health <= 0) {
+            die();
+        }
     }
     
-    public int getReward() {
-        return reward;
+    protected void die() {
+        isActive = false;
+        // Add reward to player (handled by game manager)
     }
+    
+    protected void reachedEnd() {
+        isActive = false;
+        // Deal damage to player (handled by game manager)
+    }
+    
+    // Getters
+    public int getHealth() { return health; }
+    public int getReward() { return reward; }
+    public int getDamage() { return damage; }
 }

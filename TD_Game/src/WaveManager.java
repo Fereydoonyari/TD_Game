@@ -1,70 +1,65 @@
-import java.util.ArrayList;
-import java.util.List;
-
 class WaveManager {
-    private List<Wave> waves;
-    private int currentWaveIndex;
+    private int currentWave;
+    private int enemiesPerWave;
+    private int enemiesSpawned;
+    private long spawnInterval;
+    private long lastSpawnTime;
     private boolean waveInProgress;
+    private GameBoard gameBoard;
     
-    public WaveManager() {
-        this.waves = new ArrayList<>();
-        this.currentWaveIndex = 0;
+    public WaveManager(GameBoard gameBoard) {
+        this.gameBoard = gameBoard;
+        this.currentWave = 0;
+        this.enemiesPerWave = 10;
+        this.spawnInterval = 1500; // 1.5 seconds
         this.waveInProgress = false;
+    }
+    
+    public void startNextWave() {
+        currentWave++;
+        enemiesSpawned = 0;
+        waveInProgress = true;
+        // Increase difficulty with each wave
+        enemiesPerWave = 10 + (currentWave - 1) * 2;
+    }
+    
+    public void update() {
+        if (!waveInProgress) return;
         
-        initializeWaves();
-    }
-    
-    private void initializeWaves() {
-        // Wave 1: 5 basic enemies
-        List<EnemyType> wave1Enemies = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            wave1Enemies.add(EnemyType.BASIC);
+        long currentTime = System.currentTimeMillis();
+        if (currentTime - lastSpawnTime >= spawnInterval && enemiesSpawned < enemiesPerWave) {
+            spawnEnemy();
+            lastSpawnTime = currentTime;
+            enemiesSpawned++;
         }
-        waves.add(new Wave(wave1Enemies, 2.0f));
         
-        // Wave 2: mix of basic and fast enemies
-        List<EnemyType> wave2Enemies = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
-            wave2Enemies.add(EnemyType.BASIC);
+        if (enemiesSpawned >= enemiesPerWave && gameBoard.getEnemies().isEmpty()) {
+            waveInProgress = false;
         }
-        for (int i = 0; i < 3; i++) {
-            wave2Enemies.add(EnemyType.FAST);
-        }
-        waves.add(new Wave(wave2Enemies, 1.5f));
+    }
+    
+    private void spawnEnemy() {
+        Enemy enemy;
+        int enemyType = (int) (Math.random() * 3);
         
-        // Wave 3: more enemies with tanks
-        List<EnemyType> wave3Enemies = new ArrayList<>();
-        for (int i = 0; i < 4; i++) {
-            wave3Enemies.add(EnemyType.BASIC);
+        switch (enemyType) {
+            case 0:
+                enemy = new BasicEnemy();
+                break;
+            case 1:
+                enemy = new FastEnemy();
+                break;
+            case 2:
+                enemy = new TankEnemy();
+                break;
+            default:
+                enemy = new BasicEnemy();
         }
-        for (int i = 0; i < 4; i++) {
-            wave3Enemies.add(EnemyType.FAST);
-        }
-        wave3Enemies.add(EnemyType.TANK);
-        waves.add(new Wave(wave3Enemies, 1.0f));
+        
+        gameBoard.spawnEnemy(enemy);
     }
     
-    public void update(float deltaTime, TowerDefenseGame game) {
-        if (currentWaveIndex < waves.size()) {
-            if (!waveInProgress) {
-                waveInProgress = true;
-            }
-            
-            Wave currentWave = waves.get(currentWaveIndex);
-            boolean waveComplete = currentWave.update(deltaTime, game);
-            
-            if (waveComplete && game.getActiveEnemies().isEmpty()) {
-                waveInProgress = false;
-                currentWaveIndex++;
-            }
-        }
-    }
-    
-    public int getCurrentWave() {
-        return currentWaveIndex + 1;
-    }
-    
-    public boolean isAllWavesCompleted() {
-        return currentWaveIndex >= waves.size();
-    }
+    // Getters
+    public int getCurrentWave() { return currentWave; }
+    public boolean isWaveInProgress() { return waveInProgress; }
 }

@@ -1,3 +1,3 @@
 enum TileType {
-    PATH, BUILDABLE, BLOCKED
+    GRASS, PATH, WATER
 }

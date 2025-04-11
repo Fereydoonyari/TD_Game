@@ -1,49 +1,60 @@
-abstract class Tower extends Entity {
-    protected float range;
+abstract class Tower extends GameObject {
+    protected int cost;
+    protected int range;
     protected int damage;
-    protected float attackSpeed;
-    protected float attackCooldown;
+    protected long cooldown;
+    protected long lastShotTime;
+    protected Enemy target;
     
-    public Tower(float x, float y, Image sprite, float range, int damage, float attackSpeed) {
-        super(x, y, sprite);
+    public Tower(int x, int y, int cost, int range, int damage, long cooldown) {
+        super(x, y);
+        this.cost = cost;
         this.range = range;
         this.damage = damage;
-        this.attackSpeed = attackSpeed;
-        this.attackCooldown = 0;
+        this.cooldown = cooldown;
+        this.lastShotTime = 0;
     }
     
-    public void update(float deltaTime, List<Enemy> enemies) {
-        attackCooldown -= deltaTime;
-        
-        if (attackCooldown <= 0) {
-            Enemy target = findTarget(enemies);
-            if (target != null) {
-                attack(target);
-                attackCooldown = 1.0f / attackSpeed;
-            }
-        }
-    }
-    
-    protected Enemy findTarget(List<Enemy> enemies) {
-        Enemy closest = null;
-        float closestDistance = Float.MAX_VALUE;
+    public void findTarget(java.util.List<Enemy> enemies) {
+        target = null;
+        double closestDistance = Double.MAX_VALUE;
         
         for (Enemy enemy : enemies) {
-            float distance = calculateDistance(enemy);
+            double distance = calculateDistance(enemy);
             if (distance <= range && distance < closestDistance) {
-                closest = enemy;
                 closestDistance = distance;
+                target = enemy;
             }
         }
-        
-        return closest;
     }
     
-    protected float calculateDistance(Enemy enemy) {
-        float dx = x - enemy.getX();
-        float dy = y - enemy.getY();
-        return (float) Math.sqrt(dx * dx + dy * dy);
+    private double calculateDistance(Enemy enemy) {
+        int dx = enemy.getX() - x;
+        int dy = enemy.getY() - y;
+        return Math.sqrt(dx * dx + dy * dy);
     }
     
-    protected abstract void attack(Enemy target);
+    public boolean canShoot() {
+        return target != null && System.currentTimeMillis() - lastShotTime >= cooldown;
+    }
+    
+    public Projectile shoot() {
+        if (canShoot()) {
+            lastShotTime = System.currentTimeMillis();
+            return createProjectile();
+        }
+        return null;
+    }
+    
+    protected abstract Projectile createProjectile();
+    
+    @Override
+    public void update() {
+        // Tower-specific behavior
+    }
+    
+    // Getters
+    public int getCost() { return cost; }
+    public int getRange() { return range; }
+    public int getDamage() { return damage; }
 }

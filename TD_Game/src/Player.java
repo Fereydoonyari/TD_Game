@@ -1,33 +1,34 @@
 class Player {
-    private int health;
-    private int gold;
+    private int money;
+    private int lives;
     
-    public Player(int health, int gold) {
-        this.health = health;
-        this.gold = gold;
+    public Player(int startingMoney, int startingLives) {
+        this.money = startingMoney;
+        this.lives = startingLives;
     }
     
-    public void takeDamage(int damage) {
-        health -= damage;
+    public void earnMoney(int amount) {
+        money += amount;
     }
     
-    public void addGold(int amount) {
-        gold += amount;
-    }
-    
-    public boolean spendGold(int amount) {
-        if (gold >= amount) {
-            gold -= amount;
+    public boolean spendMoney(int amount) {
+        if (money >= amount) {
+            money -= amount;
             return true;
         }
         return false;
     }
     
-    public int getHealth() {
-        return health;
+    public void takeDamage(int damage) {
+        lives -= damage;
+        if (lives < 0) lives = 0;
     }
     
-    public int getGold() {
-        return gold;
+    public boolean isGameOver() {
+        return lives <= 0;
     }
+    
+    // Getters
+    public int getMoney() { return money; }
+    public int getLives() { return lives; }
 }
