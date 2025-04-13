@@ -10,10 +10,18 @@ public class AssetManager {
 
     public void loadAssets(){
         try{
-            tileAssets.put(0, ImageIO.read(getClass().getResource("/Assets/Tiles/Tile11.png")));
-            tileAssets.put(1, ImageIO.read(getClass().getResource("/Assets/Tiles/Tile6.png")));
-            tileAssets.put(2, ImageIO.read(getClass().getResource("/Assets/Tiles/Tile5.png")));
-            tileAssets.put(3, ImageIO.read(getClass().getResource("/Assets/Tiles/Tile4.png")));
+            tileAssets.put(0, ImageIO.read(getClass().getResource("/Assets/Tiles/Tile41.png")));
+            tileAssets.put(1, ImageIO.read(getClass().getResource("/Assets/Tiles/Tile42.png")));
+            tileAssets.put(2, ImageIO.read(getClass().getResource("/Assets/Tiles/Tile43.png")));
+            tileAssets.put(3, ImageIO.read(getClass().getResource("/Assets/Tiles/Tile44.png")));
+            tileAssets.put(4, ImageIO.read(getClass().getResource("/Assets/Tiles/Tile45.png")));
+            tileAssets.put(5, ImageIO.read(getClass().getResource("/Assets/Tiles/Tile46.png")));
+            tileAssets.put(6, ImageIO.read(getClass().getResource("/Assets/Tiles/Tile47.png")));
+            tileAssets.put(7, ImageIO.read(getClass().getResource("/Assets/Tiles/Tile48.png")));
+            tileAssets.put(8, ImageIO.read(getClass().getResource("/Assets/Tiles/Tile49.png")));
+            tileAssets.put(9, ImageIO.read(getClass().getResource("/Assets/Tiles/Tile50.png")));
+
+
 
 
         }catch(IOException e ){
@@ -22,7 +30,9 @@ public class AssetManager {
     }
     public void LoadEnemyAssets(){
         try {
-            enemyAssets.put(0, ImageIO.read(getClass().getResourceAsStream("/Assets/Tiles/E2.png")));
+            enemyAssets.put(1, ImageIO.read(getClass().getResourceAsStream("/Assets/Tiles/E5.png")));
+            enemyAssets.put(2, ImageIO.read(getClass().getResourceAsStream("/Assets/Tiles/E3.png")));
+
         }catch(IOException e ){
             e.printStackTrace();
         }

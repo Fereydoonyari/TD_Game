@@ -7,7 +7,7 @@ public class MapPanel extends JPanel {
     private int [][] map ;
     private AssetManager assetmanager ;
     private EnemyManager enemyManager;
-    private final int Tile_SiZE = 64 ;
+    private final int Tile_SiZE = 85 ;
 
     public MapPanel(int [][] map, AssetManager assetmanager,EnemyManager enemyManager){
         this.map = map;

@@ -1,11 +1,12 @@
 import java.util.*;
-
+import java.util.random.*;
 
 public class EnemyManager {
     private List<Enemy> enemies = new ArrayList<>();
     private AssetManager assetManager;
     private int spawnCounter = 0 ;
     private int spawnInterval = 100 ;
+    Random random = new Random();
 
     public EnemyManager(AssetManager assetManager){
         this.assetManager = assetManager;
@@ -25,9 +26,12 @@ public class EnemyManager {
         }
     }
     public void spawnWave(){
-        int [] rows = {1,2,3}; /// i should make it random after 
+        int [] rows = {1,2,3,4,5,6}; /// i should make it random after 
         for (int row : rows){
-            enemies.add(new EnemyT1(row,assetManager.getEnemySprite(0)));
+            int rand = random.nextInt(3);
+            enemies.add(new EnemyT1(row,assetManager.getEnemySprite(rand)));
+            enemies.add(new EnemyT1(row,assetManager.getEnemySprite(rand)));
+
         }
     }
     public List<Enemy> getEnemies(){
