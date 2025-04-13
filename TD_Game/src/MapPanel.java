@@ -6,11 +6,13 @@ import java.awt.image.BufferedImage;
 public class MapPanel extends JPanel {
     private int [][] map ;
     private AssetManager assetmanager ;
+    private EnemyManager enemyManager;
     private final int Tile_SiZE = 64 ;
 
-    public MapPanel(int [][] map, AssetManager assetmanager){
+    public MapPanel(int [][] map, AssetManager assetmanager,EnemyManager enemyManager){
         this.map = map;
         this.assetmanager = assetmanager;
+        this.enemyManager = enemyManager;
         setPreferredSize(new Dimension(map[0].length *Tile_SiZE,map.length*Tile_SiZE));
     }
     @Override
@@ -22,6 +24,9 @@ public class MapPanel extends JPanel {
                 BufferedImage img = assetmanager.getTileAsset(tileId);
                 g.drawImage(img, x*Tile_SiZE, y*Tile_SiZE,Tile_SiZE,Tile_SiZE,null);
             }
+        }
+        for (Enemy enemy : enemyManager.getEnemies()){
+            g.drawImage(enemy.getSprite(), enemy.getX()*Tile_SiZE,enemy.getY()*Tile_SiZE,Tile_SiZE,Tile_SiZE,null);
         }
     }
 }
