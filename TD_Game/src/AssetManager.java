@@ -19,10 +19,7 @@ public class AssetManager {
             tileAssets.put(6, ImageIO.read(getClass().getResource("/Assets/Tiles/Tile47.png")));
             tileAssets.put(7, ImageIO.read(getClass().getResource("/Assets/Tiles/Tile48.png")));
             tileAssets.put(8, ImageIO.read(getClass().getResource("/Assets/Tiles/Tile49.png")));
-            tileAssets.put(9, ImageIO.read(getClass().getResource("/Assets/Tiles/Tile48.png")));
-
-
-
+            tileAssets.put(9, ImageIO.read(getClass().getResource("/Assets/Tiles/Tile51.png")));
 
         }catch(IOException e ){
             e.printStackTrace();
