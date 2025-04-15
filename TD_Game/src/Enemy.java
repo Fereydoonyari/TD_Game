@@ -20,6 +20,15 @@ public abstract class Enemy {
             moveCounter = 0 ;
         }
     }
+    public void takeDamage(int dmg){
+        health -= dmg;
+        if (health <= 0 ){
+            health = 0 ;
+        }
+    }
+    public boolean isDead(){
+        return health <=0 ;
+    }
     public int getX(){return x ;}
     public int getY(){return y ;}
     public BufferedImage getSprite(){return sprite;}
