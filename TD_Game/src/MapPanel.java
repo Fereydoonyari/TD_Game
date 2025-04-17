@@ -26,7 +26,17 @@ public class MapPanel extends JPanel {
             }
         }
         for (Enemy enemy : enemyManager.getEnemies()){
-            g.drawImage(enemy.getSprite(), enemy.getX()*Tile_SiZE,enemy.getY()*Tile_SiZE,Tile_SiZE,Tile_SiZE,null);
+            int px = enemy.getX() * Tile_SiZE ;
+            int py = enemy.getY() * Tile_SiZE ;
+
+            g.drawImage(enemy.getSprite(), px,py,Tile_SiZE,Tile_SiZE,null);
+            int bandwith = Tile_SiZE ;
+            int barheight = 5 ;
+            double healthPercent = (double) enemy.getHelth() / enemy.getMaxHealth();
+            g.setColor(Color.RED);
+            g.fillRect(px, py - 5 , bandwith, barheight);
+            g.setColor(Color.GREEN);
+            g.fillRect(px, py -5 , (int)(bandwith * healthPercent) , barheight);
         }
     }
 }

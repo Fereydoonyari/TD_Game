@@ -32,7 +32,7 @@ public class Projectile {
         }
     }
     public boolean isActive(){return active ;}
-    public int getX(){return (int)(x*64) ;}
+    public int getX(){return (int)(x*64) ;} //// 64 --- > 85 
     public int getY(){return (int)(y*64); }
 
 }

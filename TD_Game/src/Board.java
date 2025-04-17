@@ -3,8 +3,7 @@ public class Board {
     public void placeTower (Tower tower,int x , int y){
 
     }
-    public void update (){
-        
+    public void update (){  
     }
 
 }
