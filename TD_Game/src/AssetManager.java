@@ -13,16 +13,16 @@ public class AssetManager {
 
     public void loadAssets(){
         try{
-            tileAssets.put(0, ImageIO.read(new File("src/Assets/Tiles/Tile41.png")));
-            tileAssets.put(1, ImageIO.read(new File("src/Assets/Tiles/Tile42.png")));
-            tileAssets.put(2, ImageIO.read(new File("src/Assets/Tiles/Tile43.png")));
-            tileAssets.put(3, ImageIO.read(new File("src/Assets/Tiles/Tile44.png")));
-            tileAssets.put(4, ImageIO.read(new File("src/Assets/Tiles/Tile45.png")));
-            tileAssets.put(5, ImageIO.read(new File("src/Assets/Tiles/Tile46.png")));
-            tileAssets.put(7, ImageIO.read(new File("src/Assets/Tiles/Tile48.png")));
-            tileAssets.put(8, ImageIO.read(new File("src/Assets/Tiles/Tile49.png")));
-            tileAssets.put(9, ImageIO.read(new File("src/Assets/Tiles/Tile53.png")));
-
+            tileAssets.put(0, ImageIO.read(new File("Assets/Tiles/Tile21.png")));
+            tileAssets.put(1, ImageIO.read(new File("Assets/Tiles/Tile22.png")));
+            tileAssets.put(2, ImageIO.read(new File("Assets/Tiles/Tile43.png")));
+            tileAssets.put(3, ImageIO.read(new File("Assets/Tiles/Tile44.png")));
+            tileAssets.put(4, ImageIO.read(new File("Assets/Tiles/Tile45.png")));
+            tileAssets.put(5, ImageIO.read(new File("Assets/Tiles/Tile46.png")));
+            tileAssets.put(7, ImageIO.read(new File("Assets/Tiles/Tile48.png")));
+            tileAssets.put(8, ImageIO.read(new File("Assets/Tiles/Tile49.png")));
+            tileAssets.put(9, ImageIO.read(new File("Assets/Tiles/Tile23.png")));
+            tileAssets.put(6, ImageIO.read(new File("Assets/Tiles/Tile55.png")));
 
         }catch(IOException e ){
             System.err.println("Error loading tile assets: " + e.getMessage());
@@ -31,8 +31,8 @@ public class AssetManager {
     }
     public void LoadEnemyAssets(){
         try {
-            enemyAssets.put(0, ImageIO.read(new File("src/Assets/Tiles/E5.png")));
-            enemyAssets.put(1, ImageIO.read(new File("src/Assets/Tiles/E3.png")));
+            enemyAssets.put(0, ImageIO.read(new File("Assets/Tiles/E5.png")));
+            enemyAssets.put(1, ImageIO.read(new File("Assets/Tiles/E3.png")));
 
         }catch(IOException e ){
             System.err.println("Error loading enemy assets: " + e.getMessage());
@@ -41,7 +41,7 @@ public class AssetManager {
     }
     public void LoadTowerAssets (){
         try{
-            towerAssets.put(0, ImageIO.read(new File("src/Assets/Tiles/Tile47.png")));
+            towerAssets.put(0, ImageIO.read(new File("Assets/Tiles/Tile47.png")));
 
         }catch(IOException e ){
             System.err.println("Error loading tower assets: " + e.getMessage());
