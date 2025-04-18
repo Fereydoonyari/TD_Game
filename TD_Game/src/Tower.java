@@ -9,7 +9,7 @@ public abstract class Tower {
     protected int cooldown = 0 ;
     protected BufferedImage sprite ;
 
-    public Tower(int x , int y , BufferedImage Sprite){
+    public Tower(int x , int y , BufferedImage sprite){
         this.x = x ; 
         this.y = y ;
         this.sprite = sprite;

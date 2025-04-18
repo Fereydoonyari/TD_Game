@@ -1,18 +1,22 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-
+import java.util.List;
 
 public class MapPanel extends JPanel {
     private int [][] map ;
     private AssetManager assetmanager ;
     private EnemyManager enemyManager;
+    private List<Tower> towers;
+    private List<Projectile> projectiles;
     private final int Tile_SiZE = 85 ;
 
-    public MapPanel(int [][] map, AssetManager assetmanager,EnemyManager enemyManager){
+    public MapPanel(int [][] map, AssetManager assetmanager,EnemyManager enemyManager,List<Tower> towers, List<Projectile>projectiles){
         this.map = map;
         this.assetmanager = assetmanager;
         this.enemyManager = enemyManager;
+        this.towers = towers;
+        this.projectiles = projectiles;
         setPreferredSize(new Dimension(map[0].length *Tile_SiZE,map.length*Tile_SiZE));
     }
     @Override
@@ -24,6 +28,9 @@ public class MapPanel extends JPanel {
                 BufferedImage img = assetmanager.getTileAsset(tileId);
                 g.drawImage(img, x*Tile_SiZE, y*Tile_SiZE,Tile_SiZE,Tile_SiZE,null);
             }
+        }
+        for (Tower tower : towers){
+            g.drawImage(tower.getSprite(), tower.getx()*Tile_SiZE,tower.gety()*Tile_SiZE, Tile_SiZE,Tile_SiZE,null);
         }
         for (Enemy enemy : enemyManager.getEnemies()){
             int px = enemy.getX() * Tile_SiZE ;
@@ -37,6 +44,10 @@ public class MapPanel extends JPanel {
             g.fillRect(px, py - 5 , bandwith, barheight);
             g.setColor(Color.GREEN);
             g.fillRect(px, py -5 , (int)(bandwith * healthPercent) , barheight);
+        }
+        for (Projectile p : projectiles){
+            g.setColor(Color.ORANGE);
+            g.fillOval(p.getX(), p.getY(), 10, 10);
         }
     }
 }

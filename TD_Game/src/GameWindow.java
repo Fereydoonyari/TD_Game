@@ -13,7 +13,7 @@ public class GameWindow {
             {0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0},
             {1,0,1,0,1,0,1,0,1,0,1,0,1,8,1,0,1},
             {0,1,0,1,0,1,8,1,0,1,0,1,0,1,0,1,0},
-            {1,0,1,0,1,0,1,3,1,0,1,8,1,0,1,0,1},
+            {1,0,1,0,1,0,1,0,1,0,1,8,1,0,1,0,1},
             {0,1,0,1,0,1,0,1,8,1,0,1,0,1,0,1,0},
             {1,0,1,0,1,8,1,0,1,0,1,0,1,8,1,0,1},
             {9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9}
@@ -25,10 +25,14 @@ public class GameWindow {
         assetManager.LoadEnemyAssets();
         assetManager.LoadTowerAssets();
         EnemyManager enemyManager = new EnemyManager(assetManager);
-        MapPanel mapPanel = new MapPanel(map,assetManager,enemyManager);
+        MapPanel mapPanel = new MapPanel(map,assetManager,enemyManager,towers,projectiles);
         JFrame frame = new JFrame("TOWER DEFENCE GAME ");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        towers.add(new BasicTower(3, 1, assetManager.getTowerSprite(0)));
+        towers.add(new BasicTower(1, 2, assetManager.getTowerSprite(1)));
+        towers.add(new BasicTower(1, 3, assetManager.getTowerSprite(0)));
+        towers.add(new BasicTower(1, 4, assetManager.getTowerSprite(2)));
+        towers.add(new BasicTower(1, 5, assetManager.getTowerSprite(3)));
+
 
         new Timer(16,e ->{
             frame.add(mapPanel);
