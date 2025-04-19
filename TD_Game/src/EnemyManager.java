@@ -1,3 +1,4 @@
+import java.awt.Point;
 import java.util.*;
 import java.util.random.*;
 
@@ -26,12 +27,10 @@ public class EnemyManager {
         }
     }
     public void spawnWave(){
-        int [] rows = {1,2,3,4,5,6}; /// i should make it random after 
-        for (int row : rows){
-            int rand = random.nextInt(3);
-            enemies.add(new EnemyT1(row,assetManager.getEnemySprite(rand)));
-
-        }
+        int rand = random.nextInt(3);
+        List<Point> path = PathManager.getCustomPath(); // simple straight path
+        enemies.add(new EnemyT1(assetManager.getEnemySprite(rand), path));
+            
     }
     public List<Enemy> getEnemies(){
         return enemies;

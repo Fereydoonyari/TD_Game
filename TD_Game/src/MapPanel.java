@@ -10,13 +10,14 @@ public class MapPanel extends JPanel {
     private List<Tower> towers;
     private List<Projectile> projectiles;
     private final int Tile_SiZE = 85 ;
-
-    public MapPanel(int [][] map, AssetManager assetmanager,EnemyManager enemyManager,List<Tower> towers, List<Projectile>projectiles){
+    private ScoreTracker scoreTracker;
+    public MapPanel(int [][] map, AssetManager assetmanager,EnemyManager enemyManager,List<Tower> towers, List<Projectile>projectiles,ScoreTracker sc){
         this.map = map;
         this.assetmanager = assetmanager;
         this.enemyManager = enemyManager;
         this.towers = towers;
         this.projectiles = projectiles;
+        this.scoreTracker = sc ;
         setPreferredSize(new Dimension(map[0].length *Tile_SiZE,map.length*Tile_SiZE));
     }
     @Override
@@ -49,5 +50,9 @@ public class MapPanel extends JPanel {
             g.setColor(Color.ORANGE);
             g.fillOval(p.getX(), p.getY(), 10, 10);
         }
+        g.drawImage(assetmanager.getUI(0),10,10,120,120,null);
+        g.setColor(Color.BLACK);
+        g.setFont(new Font("Arial",Font.BOLD,15));
+        g.drawString(" " + scoreTracker.get() ,29,75);
     }
 }
