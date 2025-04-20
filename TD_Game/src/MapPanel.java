@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
@@ -19,6 +21,33 @@ public class MapPanel extends JPanel {
         this.projectiles = projectiles;
         this.scoreTracker = sc ;
         setPreferredSize(new Dimension(map[0].length *Tile_SiZE,map.length*Tile_SiZE));
+
+        addMouseListener(new MouseAdapter() {
+            public void mouseClicked (MouseEvent e ){
+                int tilex = e.getX() / Tile_SiZE;
+                int tiley = e.getY() / Tile_SiZE;
+                if (map[tiley][tilex] == 5 ){
+                    handleTowerPlacement (tilex,tiley);
+                }
+            }
+        });
+    }
+    private void handleTowerPlacement(int tilex,int tiley){
+        String [] options = {"Basic Tower (20)","Sniper Tower (50)"};
+        int choice = JOptionPane.showOptionDialog(
+            this, "Select a tower to place : ", "Buold Tower ", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+            null, options, options[0]);
+        if (choice == 0 && scoreTracker.get() >= 20 ){
+            towers.add(new BasicTower(tilex,tiley,assetmanager.getTowerSprite(0)));
+            scoreTracker.spend (20);
+            map[tiley][tilex] = 0 ;
+        }else if (choice == 1 && scoreTracker.get() >= 50 ){
+            towers.add(new SniperTower(tilex,tiley,assetmanager.getTowerSprite(1)));
+            scoreTracker.spend(50);
+            map[tiley][tilex] = 0 ;
+        }else {
+            JOptionPane.showMessageDialog(this,"NOT ENOUGH SCORE ! ");
+        }
     }
     @Override
     protected void paintComponent(Graphics g ){
@@ -30,25 +59,47 @@ public class MapPanel extends JPanel {
                 g.drawImage(img, x*Tile_SiZE, y*Tile_SiZE,Tile_SiZE,Tile_SiZE,null);
             }
         }
-        for (Tower tower : towers){
-            g.drawImage(tower.getSprite(), tower.getx()*Tile_SiZE,tower.gety()*Tile_SiZE, Tile_SiZE,Tile_SiZE,null);
+        for (Tower tower : towers) {
+            BufferedImage sprite = tower.getSprite();
+            int px = tower.getx() * Tile_SiZE;
+            int py = tower.gety() * Tile_SiZE;
+        
+            double scale = tower.getScale();
+            int scaledWidth = (int)(Tile_SiZE * scale);
+            int scaledHeight = (int)(Tile_SiZE * scale);
+            int offsetX = (scaledWidth - Tile_SiZE) / 2;
+            int offsetY = (scaledHeight - Tile_SiZE) / 2;
+        
+            g.drawImage(sprite, px - offsetX, py - offsetY, scaledWidth, scaledHeight, null);
         }
-        for (Enemy enemy : enemyManager.getEnemies()){
-            int px = enemy.getX() * Tile_SiZE ;
-            int py = enemy.getY() * Tile_SiZE ;
-
-            g.drawImage(enemy.getSprite(), px,py,Tile_SiZE,Tile_SiZE,null);
-            int bandwith = Tile_SiZE ;
-            int barheight = 5 ;
+        
+        for (Enemy enemy : enemyManager.getEnemies()) {
+            double scale = enemy.getScale(); // get animated scale (e.g., 1.0 to 1.1)
+            
+            int px = enemy.getX() * Tile_SiZE;
+            int py = enemy.getY() * Tile_SiZE;
+        
+            int scaledWidth = (int)(Tile_SiZE * scale);
+            int scaledHeight = (int)(Tile_SiZE * scale);
+        
+            int offsetX = (scaledWidth - Tile_SiZE) / 2;
+            int offsetY = (scaledHeight - Tile_SiZE) / 2;
+        
+            g.drawImage(enemy.getSprite(), px - offsetX, py - offsetY, scaledWidth, scaledHeight, null);
+        
+            // Health bar
+            int barWidth = Tile_SiZE;
+            int barHeight = 5;
             double healthPercent = (double) enemy.getHelth() / enemy.getMaxHealth();
+        
             g.setColor(Color.RED);
-            g.fillRect(px, py - 5 , bandwith, barheight);
+            g.fillRect(px, py - 5, barWidth, barHeight);
             g.setColor(Color.GREEN);
-            g.fillRect(px, py -5 , (int)(bandwith * healthPercent) , barheight);
+            g.fillRect(px, py - 5, (int)(barWidth * healthPercent), barHeight);
         }
+        
         for (Projectile p : projectiles){
-            g.setColor(Color.ORANGE);
-            g.fillOval(p.getX(), p.getY(), 10, 10);
+            g.drawImage(assetmanager.getPrSprite(0),p.getX() - 8, p.getY() - 8, 36, 36, null);
         }
         g.drawImage(assetmanager.getUI(0),10,10,120,120,null);
         g.setColor(Color.BLACK);

@@ -10,6 +10,8 @@ public class AssetManager {
     private HashMap<Integer,BufferedImage> enemyAssets = new HashMap<>();
     private HashMap<Integer,BufferedImage> towerAssets = new HashMap<>();
     private HashMap<Integer,BufferedImage> UI = new HashMap<>();
+    private HashMap<Integer,BufferedImage> Pr = new HashMap<>();
+
 
 
 
@@ -23,7 +25,7 @@ public class AssetManager {
             tileAssets.put(0, ImageIO.read(new File("TD_Game/src/Assets/Tiles/Tile21.png")));
             tileAssets.put(1, ImageIO.read(new File("TD_Game/src/Assets/Tiles/Tile22.png")));
             tileAssets.put(2, ImageIO.read(new File("TD_Game/src/Assets/Tiles/TileR.png")));
-            //tileAssets.put(5, ImageIO.read(new File("TD_Game/src/Assets/Tiles/Tile46.png")));
+            tileAssets.put(5, ImageIO.read(new File("TD_Game/src/Assets/Tiles/Tile55.png")));
             tileAssets.put(7, ImageIO.read(new File("TD_Game/src/Assets/Tiles/Tile48.png")));
             tileAssets.put(8, ImageIO.read(new File("TD_Game/src/Assets/Tiles/Tile44.png")));
             tileAssets.put(9, ImageIO.read(new File("TD_Game/src/Assets/Tiles/Tile23.png")));
@@ -49,8 +51,8 @@ public class AssetManager {
     }
     public void LoadTowerAssets (){
         try{
-            towerAssets.put(0, ImageIO.read(new File("TD_Game/src/Assets/Tiles/T1.png")));
-            towerAssets.put(1, ImageIO.read(new File("TD_Game/src/Assets/Tiles/T2.png")));
+            towerAssets.put(0, ImageIO.read(new File("TD_Game/src/Assets/Tiles/P3.png")));
+            towerAssets.put(1, ImageIO.read(new File("TD_Game/src/Assets/Tiles/P4.png")));
             towerAssets.put(2, ImageIO.read(new File("TD_Game/src/Assets/Tiles/P3.png")));
             towerAssets.put(3, ImageIO.read(new File("TD_Game/src/Assets/Tiles/P4.png")));
         }catch(IOException e ){
@@ -66,6 +68,13 @@ public class AssetManager {
         }
 
     }
+    public void LoadPrAssets (){
+        try{
+            Pr.put(0,ImageIO.read(new File("TD_Game/src/Assets/Tiles/PRR.png")));
+        }catch(IOException e ){
+            e.printStackTrace();
+        }
+    }
     public BufferedImage getTileAsset(int tileId){
         return tileAssets.get(tileId);
     }
@@ -77,6 +86,9 @@ public class AssetManager {
     }
     public BufferedImage getUI(int uiid){
         return UI.get(uiid);
+    }
+    public BufferedImage getPrSprite(int prid){
+        return Pr.get(prid);
     }
 
 }

@@ -8,12 +8,21 @@ public abstract class Tower {
     protected int firerate ;
     protected int cooldown = 0 ;
     protected BufferedImage sprite ;
+    protected double scale = 1.0 ;
+    private int animationTick = 0 ;
 
     public Tower(int x , int y , BufferedImage sprite){
         this.x = x ; 
         this.y = y ;
         this.sprite = sprite;
 
+    }
+    public void animate(){
+        animationTick ++ ;
+        scale = 1.0 + 0.05 * Math.sin(animationTick * 0.1) ;
+    }
+    public double getScale(){
+        return scale;
     }
     public void update (List<Enemy> enemies,List<Projectile> projectiles){
         if (cooldown > 0 ) cooldown -- ;
@@ -26,6 +35,7 @@ public abstract class Tower {
                 }
             }
         }
+        animate();
     }
     protected boolean inRange(Enemy e ){
         int dx = x - e.getX();

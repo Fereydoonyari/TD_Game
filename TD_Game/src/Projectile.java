@@ -1,38 +1,51 @@
-import java.security.ProtectionDomain;
-
 public class Projectile {
-    private double x,y ;
-    private Enemy target ; 
+    private double x, y;                   // Pixel coordinates
+    private Enemy target;
     private int speed;
-    private int damage ;
-    private Boolean active = true;
+    private int damage;
+    private boolean active = true;
+    private static final int TILE_SIZE = 85; // Or 85 — depending on your setup
 
-    public Projectile(int x , int y , Enemy target,int speed,int damage){
-        this.x = x ;
-        this.y = y ; 
-        this.target  = target;
+    public Projectile(int tileX, int tileY, Enemy target, int speed, int damage) {
+        this.x = tileX * TILE_SIZE + TILE_SIZE / 2.0;
+        this.y = tileY * TILE_SIZE + TILE_SIZE / 2.0;
+        this.target = target;
         this.speed = speed;
         this.damage = damage;
     }
-    public void update (){
-        if (!active || target == null || target.isDead()){
-            active = false ;
+
+    public void update() {
+        if (!active || target == null || target.isDead()) {
+            active = false;
             return;
         }
 
-        double dx = target.getX() - x ;
-        double dy = target.getY() - y ;
-        double dist = Math.sqrt(dx*dx + dy*dy);
-        if (dist < 0.1){
+        // Target center
+        double targetX = target.getX() * TILE_SIZE + TILE_SIZE / 2.0;
+        double targetY = target.getY() * TILE_SIZE + TILE_SIZE / 2.0;
+
+        double dx = targetX - x;
+        double dy = targetY - y;
+        double dist = Math.sqrt(dx * dx + dy * dy);
+
+        if (dist < 10) {  // Hit threshold in pixels
             target.takeDamage(damage);
             active = false;
-        }else {
-            x += (dx / dist)*0.1*speed;
-            y += (dy /dist)*0.1*speed;
+        } else {
+            x += (dx / dist) * speed;
+            y += (dy / dist) * speed;
         }
     }
-    public boolean isActive(){return active ;}
-    public int getX(){return (int)(x*64) ;} //// 64 --- > 85 
-    public int getY(){return (int)(y*64); }
 
+    public boolean isActive() {
+        return active;
+    }
+
+    public int getX() {
+        return (int)x;
+    }
+
+    public int getY() {
+        return (int)y;
+    }
 }

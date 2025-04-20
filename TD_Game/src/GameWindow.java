@@ -9,12 +9,12 @@ public class GameWindow {
     public static void main(String[] args) {
         int[][] map = {
             {9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9},
-            {0,1,0,1,2,2,2,1,0,1,0,1,0,1,0,1,0},
-            {2,2,2,0,2,0,2,0,1,0,1,0,1,8,1,0,1},
-            {0,1,2,1,2,1,2,1,0,1,0,1,0,1,0,1,0},
-            {1,0,2,0,2,0,2,0,1,0,1,8,1,0,1,0,1},
-            {0,1,2,1,2,1,2,1,8,1,0,1,0,1,0,1,0},
-            {1,0,2,2,2,8,2,2,2,0,1,0,1,8,1,0,1},
+            {0,1,0,1,2,2,2,1,2,2,2,1,2,2,2,5,0},
+            {2,2,2,0,2,0,2,5,2,0,2,0,2,8,2,5,1},
+            {0,1,2,1,2,1,2,5,2,1,2,1,2,1,2,1,0},
+            {1,0,2,0,2,0,2,0,2,0,2,8,2,0,2,5,1},
+            {0,1,2,1,2,1,2,1,2,5,2,5,2,1,2,5,0},
+            {1,0,2,2,2,8,2,2,2,5,2,2,2,8,2,2,2},
             {9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9}
         };
         List<Point> path = new ArrayList<>();
@@ -30,6 +30,7 @@ public class GameWindow {
         assetManager.LoadEnemyAssets();
         assetManager.LoadTowerAssets();
         assetManager.LoadUI();
+        assetManager.LoadPrAssets();
 
         ScoreTracker scoreTracker = new ScoreTracker();
         EnemyManager enemyManager = new EnemyManager(assetManager);
@@ -43,11 +44,6 @@ public class GameWindow {
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
-        // Add some test towers
-        towers.add(new BasicTower(3, 2, assetManager.getTowerSprite(1)));
-        towers.add(new BasicTower(3, 3, assetManager.getTowerSprite(0)));
-        towers.add(new BasicTower(3, 4, assetManager.getTowerSprite(2)));
-        towers.add(new BasicTower(3, 5, assetManager.getTowerSprite(3)));
 
         // Game loop
         new Timer(16, e -> {

@@ -12,6 +12,8 @@ public abstract class Enemy {
     protected int scoreValue = 10 ;
     protected int CurrentWayPoint = 0 ;
     protected List<Point> path;
+    protected double scale = 1.0 ;
+    private int animationTick = 0 ;
 
     public Enemy (BufferedImage sprite, int maxhealth,List<Point> path){
         this.path = path;
@@ -36,6 +38,7 @@ public abstract class Enemy {
             }
             moveCounter = 0;
         }
+        animate();
     }
     
     public void takeDamage(int dmg){
@@ -54,7 +57,13 @@ public abstract class Enemy {
     public boolean reachedEnd() {
         return CurrentWayPoint >= path.size();
     }
-    
+    public double getScale (){
+        return scale ;
+    }
+    public void animate (){
+        animationTick ++ ;
+        scale = 1.0 + 0.05 * Math.sin(animationTick * 0.1 ) ; /// /0.5 for scale 
+    }
     public int getX(){return x ;}
     public int getY(){return y ;}
     public BufferedImage getSprite(){return sprite;}
