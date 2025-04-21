@@ -33,9 +33,9 @@ public class MapPanel extends JPanel {
         });
     }
     private void handleTowerPlacement(int tilex,int tiley){
-        String [] options = {"Basic Tower (20)","Sniper Tower (50)"};
+        String [] options = {"Basic (20)","Sniper (50)"};
         int choice = JOptionPane.showOptionDialog(
-            this, "Select a tower to place : ", "Buold Tower ", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+            this, "Select a Defender to place : ", " Defender Selection ", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
             null, options, options[0]);
         if (choice == 0 && scoreTracker.get() >= 20 ){
             towers.add(new BasicTower(tilex,tiley,assetmanager.getTowerSprite(0)));

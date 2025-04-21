@@ -30,6 +30,7 @@ public class EnemyManager {
         int rand = random.nextInt(3);
         List<Point> path = PathManager.getCustomPath(); // simple straight path
         enemies.add(new EnemyT1(assetManager.getEnemySprite(rand), path)); 
+
     }
     public List<Enemy> getEnemies(){
         return enemies;
