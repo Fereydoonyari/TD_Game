@@ -105,5 +105,6 @@ public class MapPanel extends JPanel {
         g.setColor(Color.BLACK);
         g.setFont(new Font("Arial",Font.BOLD,15));
         g.drawString(" " + scoreTracker.get() ,29,75);
+
     }
 }

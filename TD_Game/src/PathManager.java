@@ -59,7 +59,6 @@ public class PathManager {
         path.add(new Point(15, 6));
         path.add(new Point(16, 6));
         path.add(new Point(17, 6));
-
         return path;
     }
 }
