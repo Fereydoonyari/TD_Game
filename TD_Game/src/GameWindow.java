@@ -46,7 +46,7 @@ public class GameWindow {
 
 
         // Game loop
-        new Timer(16, e -> {
+        new Timer(18, e -> {
             enemyManager.update();
 
             // Update towers (they shoot)

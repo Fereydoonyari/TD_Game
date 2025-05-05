@@ -33,9 +33,9 @@ public class AssetManager {
     }
     public void LoadEnemyAssets(){
         try {
-            enemyAssets.put(0, ImageIO.read(new File("TD_Game/src/Assets/Tiles/E1.png")));
-            enemyAssets.put(1, ImageIO.read(new File("TD_Game/src/Assets/Tiles/E2.png")));
-            enemyAssets.put(2, ImageIO.read(new File("TD_Game/src/Assets/Tiles/E3.png")));
+            enemyAssets.put(0, ImageIO.read(new File("TD_Game/src/Assets/Tiles/E12.png")));
+            enemyAssets.put(1, ImageIO.read(new File("TD_Game/src/Assets/Tiles/E11.png")));
+            enemyAssets.put(2, ImageIO.read(new File("TD_Game/src/Assets/Tiles/E13.png")));
             enemyAssets.put(3, ImageIO.read(new File("TD_Game/src/Assets/Tiles/E4.png")));
         }catch(IOException e ){
             System.err.println("Error loading enemy assets: " + e.getMessage());
@@ -44,10 +44,10 @@ public class AssetManager {
     }
     public void LoadTowerAssets (){
         try{
-            towerAssets.put(0, ImageIO.read(new File("TD_Game/src/Assets/Tiles/P41.png")));
-            towerAssets.put(1, ImageIO.read(new File("TD_Game/src/Assets/Tiles/P42.png")));
-            towerAssets.put(2, ImageIO.read(new File("TD_Game/src/Assets/Tiles/P44.png")));
-            towerAssets.put(3, ImageIO.read(new File("TD_Game/src/Assets/Tiles/P43.png")));
+            towerAssets.put(0, ImageIO.read(new File("TD_Game/src/Assets/Tiles/Simple1.png")));
+            towerAssets.put(1, ImageIO.read(new File("TD_Game/src/Assets/Tiles/Simple2.png")));
+            towerAssets.put(2, ImageIO.read(new File("TD_Game/src/Assets/Tiles/Sniper1.png")));
+            towerAssets.put(3, ImageIO.read(new File("TD_Game/src/Assets/Tiles/Sniper2.png")));
         }catch(IOException e ){
             System.err.println("Error loading tower assets: " + e.getMessage());
             e.printStackTrace();
@@ -56,6 +56,8 @@ public class AssetManager {
     public void LoadUI(){
         try{
             UI.put(0, ImageIO.read(new File("TD_Game/src/Assets/Tiles/Uscore.png")));
+            UI.put(1, ImageIO.read(new File("TD_Game/src/Assets/Tiles/155.png")));
+
         }catch(IOException e ){
             e.printStackTrace();
         }
@@ -63,7 +65,7 @@ public class AssetManager {
     }
     public void LoadPrAssets (){
         try{
-            Pr.put(0,ImageIO.read(new File("TD_Game/src/Assets/Tiles/PRB.png")));
+            Pr.put(0,ImageIO.read(new File("TD_Game/src/Assets/Tiles/PRFS.png")));
         }catch(IOException e ){
             e.printStackTrace();
         }

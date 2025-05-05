@@ -1,5 +1,4 @@
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -31,6 +30,34 @@ public class MapPanel extends JPanel {
                 }
             }
         });
+        addMouseListener(new MouseAdapter() {
+            public void mousePressed (MouseEvent e ){
+                int mouseX = e.getX();
+                int mouseY = e.getY();
+
+                int clickedCol = mouseX / Tile_SiZE;
+                int clickedRow = mouseY / Tile_SiZE;
+
+                for (Tower tower : towers){
+                    if (tower.getx() == clickedCol && tower.gety() == clickedRow){
+                        openUpgradeMenu(tower);
+                        break;
+                    }
+                }
+            }
+        });
+    }
+    private void openUpgradeMenu(Tower tower ){
+        int result = JOptionPane.showConfirmDialog(this, "Upgrade this Soldier for 50 score?", "Upgrade",JOptionPane.YES_NO_OPTION);
+        if (result == JOptionPane.YES_OPTION){
+            if (scoreTracker.get()>= 50){
+                scoreTracker.spend(50);
+                tower.upgrade();
+            }else {
+                JOptionPane.showMessageDialog(this, "Not enough score to upgrade!");
+            }
+        }
+    
     }
     private void handleTowerPlacement(int tilex,int tiley){
         String [] options = {"Basic (20)","Sniper (50)"};
@@ -38,11 +65,11 @@ public class MapPanel extends JPanel {
             this, "Select a Defender to place : ", " Defender Selection ", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
             null, options, options[0]);
         if (choice == 0 && scoreTracker.get() >= 20 ){
-            towers.add(new BasicTower(tilex,tiley,assetmanager.getTowerSprite(0)));
+            towers.add(new BasicTower(tilex,tiley,assetmanager.getTowerSprite(0),assetmanager.getTowerSprite(1)));
             scoreTracker.spend (20);
             map[tiley][tilex] = 0 ;
         }else if (choice == 1 && scoreTracker.get() >= 50 ){
-            towers.add(new SniperTower(tilex,tiley,assetmanager.getTowerSprite(1)));
+            towers.add(new SniperTower(tilex,tiley,assetmanager.getTowerSprite(2),assetmanager.getTowerSprite(3)));
             scoreTracker.spend(50);
             map[tiley][tilex] = 0 ;
         }else {
@@ -101,10 +128,12 @@ public class MapPanel extends JPanel {
         for (Projectile p : projectiles){
             g.drawImage(assetmanager.getPrSprite(0),p.getX() - 8, p.getY() - 8, 36, 36, null);
         }
+        //g.drawImage(assetmanager.getUI(1),0,0,1450,700,null);
         g.drawImage(assetmanager.getUI(0),10,10,120,120,null);
         g.setColor(Color.BLACK);
         g.setFont(new Font("Arial",Font.BOLD,15));
         g.drawString(" " + scoreTracker.get() ,29,75);
+
 
     }
 }
