@@ -25,6 +25,7 @@ public class AssetManager {
             tileAssets.put(8, ImageIO.read(new File("TD_Game/src/Assets/Tiles/Tile44.png")));
             tileAssets.put(9, ImageIO.read(new File("TD_Game/src/Assets/Tiles/Tile23.png")));
 
+
         }catch(IOException e ){
             System.err.println("Error loading tile assets: " + e.getMessage());
             e.printStackTrace();

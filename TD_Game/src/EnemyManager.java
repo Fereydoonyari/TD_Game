@@ -8,14 +8,15 @@ public class EnemyManager {
     private int spawnCounter = 0 ;
     private int spawnInterval = 100 ;
     Random random = new Random();
-
-    public EnemyManager(AssetManager assetManager){
+    private int mapnumber;
+    public EnemyManager(int mapnumber,AssetManager assetManager){
+        this.mapnumber = mapnumber;
         this.assetManager = assetManager;
     }
     public void update (){
         spawnCounter ++ ;
         if (spawnCounter >= spawnInterval){
-            spawnWave();
+            spawnWave(mapnumber);
             spawnCounter = 0 ;
         }
         for (Iterator<Enemy> it = enemies.iterator();it.hasNext();){
@@ -26,9 +27,15 @@ public class EnemyManager {
             }
         }
     }
-    public void spawnWave(){
+    public void spawnWave(int mapnumber){
         int rand = random.nextInt(3);
-        List<Point> path = PathManager.getCustomPath(); // simple straight path
+        List<Point> path;
+        if (mapnumber == 1 ){
+            path = PathManager.getCustomPath(); 
+        }else {
+            path = PathManager.getCustomPath2(); 
+        }
+        
         enemies.add(new EnemyT1(assetManager.getEnemySprite(rand), path)); 
 
     }
