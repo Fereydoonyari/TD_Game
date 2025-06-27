@@ -1,6 +1,5 @@
 import java.awt.Point;
 import java.util.*;
-import java.util.random.*;
 
 public class EnemyManager {
     private List<Enemy> enemies = new ArrayList<>();
@@ -34,8 +33,7 @@ public class EnemyManager {
             path = PathManager.getCustomPath(); 
         }else {
             path = PathManager.getCustomPath2(); 
-        }
-        
+        }  
         enemies.add(new EnemyT1(assetManager.getEnemySprite(rand), path)); 
 
     }

@@ -10,10 +10,6 @@ public class AssetManager {
     private HashMap<Integer,BufferedImage> towerAssets = new HashMap<>();
     private HashMap<Integer,BufferedImage> UI = new HashMap<>();
     private HashMap<Integer,BufferedImage> Pr = new HashMap<>();
-
-
-
-
     public void loadAssets(){
         try{
             tileAssets.put(0, ImageIO.read(new File("TD_Game/src/Assets/Tiles/Tile21.png")));
@@ -24,8 +20,6 @@ public class AssetManager {
             tileAssets.put(5, ImageIO.read(new File("TD_Game/src/Assets/Tiles/Tile55.png")));
             tileAssets.put(8, ImageIO.read(new File("TD_Game/src/Assets/Tiles/Tile44.png")));
             tileAssets.put(9, ImageIO.read(new File("TD_Game/src/Assets/Tiles/Tile23.png")));
-
-
         }catch(IOException e ){
             System.err.println("Error loading tile assets: " + e.getMessage());
             e.printStackTrace();
