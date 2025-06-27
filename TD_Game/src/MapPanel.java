@@ -1,10 +1,12 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
 public class MapPanel extends JPanel {
+
     private int [][] map ;
     private AssetManager assetmanager ;
     private EnemyManager enemyManager;
@@ -12,6 +14,7 @@ public class MapPanel extends JPanel {
     private List<Projectile> projectiles;
     private final int Tile_SiZE = 85 ;
     private ScoreTracker scoreTracker;
+
     public MapPanel(int [][] map, AssetManager assetmanager,EnemyManager enemyManager,List<Tower> towers, List<Projectile>projectiles,ScoreTracker sc){
         this.map = map;
         this.assetmanager = assetmanager;
@@ -101,7 +104,7 @@ public class MapPanel extends JPanel {
         }
         
         for (Enemy enemy : enemyManager.getEnemies()) {
-            double scale = enemy.getScale(); // get animated scale (e.g., 1.0 to 1.1)
+            double scale = enemy.getScale(); 
             
             int px = enemy.getX() * Tile_SiZE;
             int py = enemy.getY() * Tile_SiZE;
@@ -114,7 +117,6 @@ public class MapPanel extends JPanel {
         
             g.drawImage(enemy.getSprite(), px - offsetX, py - offsetY, scaledWidth, scaledHeight, null);
         
-            // Health bar
             int barWidth = Tile_SiZE;
             int barHeight = 5;
             double healthPercent = (double) enemy.getHelth() / enemy.getMaxHealth();
@@ -128,7 +130,6 @@ public class MapPanel extends JPanel {
         for (Projectile p : projectiles){
             g.drawImage(assetmanager.getPrSprite(0),p.getX() - 8, p.getY() - 8, 36, 36, null);
         }
-        //g.drawImage(assetmanager.getUI(1),0,0,1450,700,null);
         g.drawImage(assetmanager.getUI(0),10,10,120,120,null);
         g.setColor(Color.BLACK);
         g.setFont(new Font("Arial",Font.BOLD,15));

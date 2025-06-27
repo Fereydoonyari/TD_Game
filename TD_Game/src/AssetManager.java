@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 
-// lerp
 public class AssetManager {
     private HashMap<Integer,BufferedImage> tileAssets = new HashMap<>();
     private HashMap<Integer,BufferedImage> enemyAssets = new HashMap<>();

@@ -1,10 +1,10 @@
 public class Projectile {
-    private double x, y;                   // Pixel coordinates
+    private double x, y;                   
     private Enemy target;
     private int speed;
     private int damage;
     private boolean active = true;
-    private static final int TILE_SIZE = 85; // Or 85 — depending on your setup
+    private static final int TILE_SIZE = 85; 
 
     public Projectile(int tileX, int tileY, Enemy target, int speed, int damage) {
         this.x = tileX * TILE_SIZE + TILE_SIZE / 2.0;
@@ -20,7 +20,6 @@ public class Projectile {
             return;
         }
 
-        // Target center
         double targetX = target.getX() * TILE_SIZE + TILE_SIZE / 2.0;
         double targetY = target.getY() * TILE_SIZE + TILE_SIZE / 2.0;
 
@@ -28,7 +27,7 @@ public class Projectile {
         double dy = targetY - y;
         double dist = Math.sqrt(dx * dx + dy * dy);
 
-        if (dist < 10) {  // Hit threshold in pixels
+        if (dist < 10) {  
             target.takeDamage(damage);
             active = false;
         } else {
